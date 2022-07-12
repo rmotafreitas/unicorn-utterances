@@ -19,9 +19,9 @@ export const useHeadingIntersectionObserver = ({
     // this assumes the <TableOfContents> is placed in a <BlogPostLayout>, which provides the scrolling container
     const tocListContainer = tocListRef.current?.parentElement?.parentElement;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    );
+    const prefersReducedMotion = window.matchMedia
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")?.matches
+      : false;
 
     const handleObserver: IntersectionObserverCallback = (entries) => {
       const highlightFirstActive = () => {
@@ -43,7 +43,7 @@ export const useHeadingIntersectionObserver = ({
           // if the element is beyond the visible area of the container...
           if (
             // the user hasn't requested reduced motion...
-            !prefersReducedMotion.matches &&
+            !prefersReducedMotion &&
             tocListContainer &&
             // the link is below the lowest point of the container...
             (tocListContainer.scrollTop + tocListContainer.offsetHeight <
