@@ -47,7 +47,7 @@ export const useHeadingIntersectionObserver = ({
             tocListContainer &&
             // the link is below the lowest point of the container...
             (tocListContainer.scrollTop + tocListContainer.offsetHeight <
-              firstVisibleLink.offsetTop ||
+              firstVisibleLink.offsetTop + firstVisibleLink.offsetHeight ||
               // the link is above the highest point of the container...
               tocListContainer.scrollTop > firstVisibleLink.offsetTop)
           ) {
