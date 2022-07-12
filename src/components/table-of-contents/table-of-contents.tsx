@@ -44,6 +44,10 @@ export const TableOfContents = ({ headingsWithId }: TableOfContentsProps) => {
     headingsToDisplay,
   });
 
+  const prefersReducedMotion = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")?.matches
+    : false;
+
   return (
     <aside aria-label={"Table of Contents"}>
       <ol
@@ -57,13 +61,24 @@ export const TableOfContents = ({ headingsWithId }: TableOfContentsProps) => {
             [tableOfContentsStyle.tocH2]: headingInfo.depth === 2,
             [tableOfContentsStyle.tocH3]: headingInfo.depth === 3,
           });
+
+          const handleClick = (e: React.SyntheticEvent) => {
+            e.preventDefault();
+            document.getElementById(headingInfo.slug)?.scrollIntoView({
+              behavior: prefersReducedMotion ? "auto" : "smooth",
+            });
+            return false;
+          };
+
           return (
             <li
               key={headingInfo.slug}
               ref={linkRefs[i]}
               className={liClassNames}
             >
-              <a href={`#${headingInfo.slug}`}>{headingInfo.value}</a>
+              <a href={`#${headingInfo.slug}`} onClick={handleClick}>
+                {headingInfo.value}
+              </a>
             </li>
           );
         })}
