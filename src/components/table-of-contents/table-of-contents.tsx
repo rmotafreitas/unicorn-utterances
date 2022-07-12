@@ -44,9 +44,10 @@ export const TableOfContents = ({ headingsWithId }: TableOfContentsProps) => {
     headingsToDisplay,
   });
 
-  const prefersReducedMotion = window.matchMedia
-    ? window.matchMedia("(prefers-reduced-motion: reduce)")?.matches
-    : false;
+  const prefersReducedMotion =
+    typeof window !== "undefined" && window.matchMedia
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")?.matches
+      : false;
 
   return (
     <aside aria-label={"Table of Contents"}>
